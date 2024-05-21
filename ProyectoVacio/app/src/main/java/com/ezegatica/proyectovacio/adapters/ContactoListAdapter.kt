@@ -7,31 +7,26 @@ import android.widget.TextView
 
 import com.ezegatica.proyectovacio.fragments.placeholder.PlaceholderContent.PlaceholderItem
 import com.ezegatica.proyectovacio.databinding.FragmentItemBinding
+import com.ezegatica.proyectovacio.entities.Contacto
+import com.ezegatica.proyectovacio.holders.ContactoHolder
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
-class MyItemRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
-) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
+class ContactoListAdapter(
+    private val values: MutableList<Contacto>
+) : RecyclerView.Adapter<ContactoHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        return ViewHolder(
-            FragmentItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactoHolder {
+        val view =  LayoutInflater.from(parent.context).inflate(R.layout.item_contactos,parent,false) // Cambiar  ID's
+        return (ContactoHolder(view))
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ContactoHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.setName(item.nombre)
+        holder.setCurso(item.edad.toString());
     }
 
     override fun getItemCount(): Int = values.size

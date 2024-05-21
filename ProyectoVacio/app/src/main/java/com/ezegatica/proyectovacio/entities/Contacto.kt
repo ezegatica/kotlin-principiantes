@@ -2,18 +2,18 @@ package com.ezegatica.proyectovacio.entities
 
 import android.os.Parcel
 import android.os.Parcelable
-
-class Contacto() : Parcelable {
+class Contacto(nombre: String?, edad: Int?, curso: String?, urlImage: String?) : Parcelable {
     var nombre: String = ""
-    var curso: String = ""
     var edad: Int = 0
+    var curso: String = ""
     var urlImage: String = ""
-    constructor(parcel: Parcel) : this() {
+    constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readInt(),
         parcel.readString(),
         parcel.readString()
-    }
+    )
+
 
     class Constants {
         companion object {
@@ -25,15 +25,15 @@ class Contacto() : Parcelable {
 
     init {
         this.nombre = nombre!!
-        this.curso = curso!!
         this.edad = edad!!
+        this.curso = curso!!
         this.urlImage = urlImage!!
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(nombre)
-        parcel.writeString(curso)
         parcel.writeInt(edad)
+        parcel.writeString(curso)
         parcel.writeString(urlImage)
     }
 
@@ -51,3 +51,4 @@ class Contacto() : Parcelable {
         }
     }
 }
+

@@ -9,7 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ezegatica.proyectovacio.R
-import com.ezegatica.proyectovacio.adapters.MyItemRecyclerViewAdapter
+import com.ezegatica.proyectovacio.adapters.ContactoListAdapter
+import com.ezegatica.proyectovacio.entities.Contacto
 import com.ezegatica.proyectovacio.fragments.placeholder.PlaceholderContent
 
 /**
@@ -18,6 +19,14 @@ import com.ezegatica.proyectovacio.fragments.placeholder.PlaceholderContent
 class ItemFragment : Fragment() {
 
     private var columnCount = 1
+
+    lateinit var recContactos : RecyclerView;
+
+    var contactos : MutableList<Contacto> = ArrayList()
+
+    private lateinit var linearLayoutManager: LinearLayoutManager
+
+    private lateinit var contactoListAdapter: ContactoListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +41,8 @@ class ItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
-
+        recContactos = view.findViewById(R.id.rec_contactos) // cambiar
+        /*
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
@@ -40,10 +50,34 @@ class ItemFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS)
+                adapter = ContactoListAdapter(PlaceholderContent.ITEMS)
             }
         }
+        */
+
         return view
+    }
+
+    override fun onStart() {
+        super.onStart();
+        for (i in 1..100) {
+            contactos.add(Contacto("Pedro",26, Contacto.Constants.cursoA, "https://images.dog.ceo/breeds/collie-border/n02106166_8037.jpg"))
+            contactos.add(Contacto("Rodolfo",30, Contacto.Constants.cursoA, "https://images.dog.ceo/breeds/retriever-golden/Z6A_4904_200816.jpg"))
+            contactos.add(Contacto("Emilio",28, Contacto.Constants.cursoB, "https://images.dog.ceo/breeds/deerhound-scottish/n02092002_1592.jpg"))
+            contactos.add(Contacto("Luis",37, Contacto.Constants.cursoB, "https://images.dog.ceo/breeds/terrier-cairn/n02096177_2203.jpg"))
+            contactos.add(Contacto("Carlos", 42, Contacto.Constants.cursoC, "https://images.dog.ceo/breeds/bulldog-english/murphy.jpg"))
+            contactos.add(Contacto("David",21, Contacto.Constants.cursoC, "https://images.dog.ceo/breeds/retriever-flatcoated/n02099267_3272.jpg"))
+        }
+
+        requireActivity()
+
+        recContactos.setHasFixedSize(true)
+        linearLayoutManager = LinearLayoutManager(context)
+        contactoListAdapter = ContactoListAdapter(contactos, this)
+
+        recContactos.layoutManager = linearLayoutManager
+        recContactos.adapter = contactoListAdapter
+
     }
 
     companion object {
