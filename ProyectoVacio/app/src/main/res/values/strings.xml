@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">ProyectoVacio</string>
+    <string name="card_view_center">Default</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

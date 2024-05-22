@@ -9,17 +9,20 @@ import com.ezegatica.proyectovacio.fragments.placeholder.PlaceholderContent.Plac
 import com.ezegatica.proyectovacio.databinding.FragmentItemBinding
 import com.ezegatica.proyectovacio.entities.Contacto
 import com.ezegatica.proyectovacio.holders.ContactoHolder
+import com.ezegatica.proyectovacio.R
+import com.ezegatica.proyectovacio.listeners.OnViewItemClickedListener
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
 class ContactoListAdapter(
-    private val values: MutableList<Contacto>
+    private val values: MutableList<Contacto>,
+    private val onItemClick: OnViewItemClickedListener
 ) : RecyclerView.Adapter<ContactoHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactoHolder {
-        val view =  LayoutInflater.from(parent.context).inflate(R.layout.item_contactos,parent,false) // Cambiar  ID's
+        val view =  LayoutInflater.from(parent.context).inflate(R.layout.fragment_item,parent,false) // Cambiar  ID's
         return (ContactoHolder(view))
     }
 
@@ -27,17 +30,11 @@ class ContactoListAdapter(
         val item = values[position]
         holder.setName(item.nombre)
         holder.setCurso(item.edad.toString());
-    }
 
-    override fun getItemCount(): Int = values.size
-
-    inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
-
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+        holder.getCardLayout().setOnClickListener{
+            onItemClick.onViewItemDetail(item)
         }
     }
 
+    override fun getItemCount(): Int = values.size
 }
